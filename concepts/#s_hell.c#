@@ -22,7 +22,6 @@ int main(void)
 	while (1)
 		printf("cmd: %s\n", cmd[i]), i++;
 */
-		printf("%s/n", cmd[0]);
 	child = fork();
 	if (child == -1)
 	{
