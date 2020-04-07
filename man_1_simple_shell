@@ -1,1 +1,54 @@
-Man
+.TH s_hell 1 "5 April 2020" "version 1.0" "command intepreter man page"
+.SH NAME
+.B s_hell
+command interpreter (shell)
+.SH SYNOPSIS
+#include "shellhead.h"
+.br
+.SB int _printf(const unsigned int n, ...);
+.SH DESCRIPTION
+s_hell is a command line interpreter that executes commands read from standard input or from a file.
+
+.br
+.B NEW HEADER HERE
+
+.br
+.B c
+- int argument is converted to char, the resulting char is written
+
+.br
+.B s
+- argument is pointer to an array of character types, characters are written
+
+.br
+.B %
+- the complete conversion specification is '%%', a '%' is written
+
+.br
+.B d, i
+- int argument is converted to signed decimal notation, decimal is written
+
+.br
+.B b
+- unsigned int is converted to binary, binary is written
+.SH OPTIONS
+None.
+.SH SEE ALSO
+.I None.
+.SH BUGS
+No known bugs. Notify
+.B AUTHOR
+if found.
+.SH AUTHORS
+.B Ian Culp
+.br
+ian.culp@holbertonschool.com
+.br
+https://github.com/icculp
+.br
+
+.B Staci Aaenson-Fletcher
+.br
+staci.aaensonfletcher@holbertonschool.com
+.br
+https://github.com/StaciAF
