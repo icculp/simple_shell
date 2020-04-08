@@ -14,7 +14,7 @@ pathlist *pathparser(char *val, pathlist *h)
 	}
 	return (h);
 }
-
+/**
 int main(void)
 {
 	char *path = "PATH";
@@ -24,9 +24,6 @@ int main(void)
 	pathhead = NULL;
 	val = _getenv(path);
 	pathhead = pathparser(val, pathhead);
-/**	printf("segfault right here:\n");
-	printf("pathstrinmain: %s\n", pathhead->str);
-	printf("right before segfault?\n");*/
 	print_pathlist(pathhead);
 	return(0);
-}
+}*/
