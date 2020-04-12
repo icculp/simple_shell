@@ -1,6 +1,26 @@
 #include "shellhead.h"
 
 /**
+* *_strcpy - Copies a string pointed to by src including null char to buffer
+* @dest: A buffer to receive the copied string
+* @src: The pointer of the string to the copied
+* Return: Value of buffer dest
+*/
+
+char *_strcpy(char *dest, char *src)
+{
+	int i = 0, j;
+
+	while (src[i] != '\0')
+		i++;
+	i++;
+	for (j = 0; j < i; j++)
+		dest[j] = src[j];
+
+	return (dest);
+}
+
+/**
 * _strcmp - Compares two strings
 * @s1: String 1
 * @s2: String 2
@@ -11,6 +31,10 @@ int _strcmp(const char *s1, const char *s2)
 {
 	int i = 0, ret = 0;
 
+	if (s1[0] == '\0' && s2[0] != '\0')
+		return (-1);
+	if (s2[0] == '\0' && s1[0] != '\0')
+		return (1);
 	while (s1[i] != '\0')
 	{
 		if (s1[i] != s2[i])
@@ -83,9 +107,10 @@ char *_strdup(const char *str)
 		;
 	}
 	len++;
-	c = (char *)malloc(sizeof(*c) * len);
-	if (c == 0)
+	c = malloc(sizeof(char) * len);
+	if (c == NULL)
 	{
+		free(c);
 		return (NULL);
 	}
 	for (i = 0; i < len; i++)
