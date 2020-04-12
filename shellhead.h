@@ -21,6 +21,29 @@ typedef struct pathlist
 	struct pathlist *next;
 } pathlist;
 
+/**
+* struct shellstruct - Struct holding common data types for shell
+* @buf: Buffer to hold strings given as input to getline
+* @size: Size of buf for getline
+* @get: Return value of getline
+* @stat: Wait space
+* @pathhead: Head of path linked list
+* @cmd: Arugment array
+* @execcpy: Copy of executable name without arguments or path
+* Description: Allows multiple arguments TO and RETURN from helper func
+*/
+
+typedef struct shellstruct
+{
+	char *buf;
+	size_t size;
+	int get;
+	int stat;
+	pathlist *pathhead;
+	char **cmd;
+	char *execcpy;
+} shellstruct;
+
 extern char **environ;
 void free_list(pathlist *head);
 int _strcmp(const char *s1, const char *s2);
@@ -35,5 +58,12 @@ char *_strcat(char *dest, char *src);
 int _strlen(const char *s);
 int _strcmp(const char *s1, const char *s2);
 void penv(void);
-
+int builtins(shellstruct *sh);
+shellstruct *commandparser(shellstruct *sh);
+char *pathval(char *execcpy, pathlist *currentpath);
+void _execve(shellstruct *sh);
+shellstruct *prompt(shellstruct *sh);
+void freehelper(shellstruct *sh);
+void freecmd(shellstruct *sh);
+char *_strcpy(char *dest, char *src);
 #endif

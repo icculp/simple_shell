@@ -2,93 +2,48 @@
 
 /**
 * main - Program that functions as command line interpreter
-* @ac: arguments count
-* @av: argument value
 * Return: 0 on success or -1 on failure
 */
 
 int main(void)
 {
-	char **cmd = malloc(sizeof(char *) * 10);
-	char *buf, *buf2, *pathval, *val, *execcpy;
-	size_t size = 0;
 	pid_t child;
-	int stat, get, ci = 0, execval;
-	pathlist *pathhead = NULL, *currentpath;
+	int builtin = 0;
+	shellstruct sh = {NULL, 0, 0, 0, NULL, NULL, NULL};
 
-	if (cmd == NULL)
-		return (1);
-
-	val = _getenv("PATH");
-	printf("val: %s\n", val);
-	pathhead = pathparser(val, pathhead);
-	currentpath = pathhead;
-	printf("currentpath: %s\n", currentpath->str);
-	write(STDOUT_FILENO, "s_hell$ ", 8);
-	get = getline(&buf, &size, stdin);
-	while (get >= 0)
+	sh.cmd = malloc(sizeof(char *) * 128);
+	sh.pathhead = pathparser(_getenv("PATH"), sh.pathhead);
+	prompt(&sh);
+	while (sh.get >= 0)
 	{
-		ci = 0;
-		buf[_strlen(buf) - 1] = '\0';
-		buf2 = strtok(buf, " ");
-		while (buf2)
+		sh.buf[_strlen(sh.buf) - 1] = '\0';
+		commandparser(&sh);
+		sh.execcpy = _strdup(sh.cmd[0]);
+		if (!(_strcmp(sh.cmd[0], "")))
 		{
-			cmd[ci] = _strdup(buf2);
-			buf2 = strtok(NULL, " ");
-			ci++;
+			freecmd(&sh);
+			prompt(&sh);
+			continue;
 		}
-		if (!_strcmp(cmd[0], "exit"))
+		builtin = builtins(&sh);
+		if (builtin == 1)
 		{
-			exit(1);
+			freecmd(&sh);
+			builtin = 0, prompt(&sh);
+			continue;
 		}
-		if (!_strcmp(cmd[0], "env"))
-		{
-			penv();
-		}
-
-		cmd[ci] = NULL;
-		execcpy = _strdup(cmd[0]);
 		child = fork();
 		if (child == -1)
-		{
-			perror("child error, you suck at parenting. Go get a cat.");
-			return (-1);
-		}
+			perror("Fork failed, you are infertile. "), exit(1);
 		if (child == 0)
-		{
-			execval = (execve(cmd[0], cmd, NULL));
-
-			while (execval == -1)
-			{
-				if ((execval == -1) && (currentpath == NULL))
-				{
-					perror(execcpy);
-					exit(1);
-				}
-				else
-				{
-					cmd[0] = _strdup(execcpy);
-					pathval = _strdup(currentpath->str);
-					pathval = _strcat(pathval, "/");
-					pathval = _strcat(pathval, cmd[0]);
-					currentpath = currentpath->next;
-					cmd[0] = _strdup(pathval);
-					execve(cmd[0], cmd, NULL);
-				}
-			}
-		}
+			_execve(&sh);
 		else
 		{
-			wait(&stat);
-			write(STDOUT_FILENO, "s_hell$ ", 8);
-			get = getline(&buf, &size, stdin);
+			wait(&sh.stat);
+			freecmd(&sh);
+			prompt(&sh);
 		}
 	}
-		free_list(pathhead);
-		free_list(currentpath);
-		free(buf);
-		free(execcpy);
-		free(pathval);
-		free(cmd);
+	freehelper(&sh);
 	return (0);
 }

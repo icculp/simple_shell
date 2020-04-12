@@ -9,14 +9,15 @@
 
 pathlist *pathparser(char *val, pathlist *h)
 {
-	char *paths;
+	char *valptr = NULL;
 
-	paths = strtok(val, ":");
-	while (paths)
+	valptr = strtok(val, ":");
+	while (valptr)
 	{
-		add_node_end(&h, paths);
-		paths = strtok(NULL, ":");
+		add_node_end(&h, valptr);
+		valptr = strtok(NULL, ":");
 	}
+	free(val);
 	return (h);
 }
 
@@ -62,7 +63,8 @@ void print_pathlist(const pathlist *h)
 {
 	while (h != NULL)
 	{
-		printf("%s\n", h->str);
+		write(STDOUT_FILENO, h->str, _strlen(h->str));
+		write(STDOUT_FILENO, "\n", 1);
 		h = h->next;
 	}
 }
