@@ -1,35 +1,89 @@
-README.md file for Project 0x16. C - Simple Shell
+# Simple Shell Partner Project
 
-TASKS
+Command Line Interpreter: s_hell -  written for Holberton School cohort 11
+simple shell end of first trimester project
 
-0. README, man, AUTHORS
+## Getting Started
 
-Write a README
-Write a man for your shell.
-You should have an AUTHORS file at the root of your repository, listing all individuals having contributed content to the repository. Format, see Docker
+Access Github for s_hell source code
 
-1. Betty would be proud
+```
+https://github.com/icculp/simple_shell
+```
 
-Write a beautiful code that passes the Betty checks
+### Prerequisites
 
-3. Simple shell 0.1
+Clone github repo:
 
-Write a UNIX command line interpreter.
+```
+git clone https://github.com/icculp/simple_shell
+```
 
-Usage: simple_shell
+Check all files from repo are available locally:
+```
+_getenv.c
+pathparser.c
+penv.c
+s_hell.c
+strings.c
+shellhead.h
+```
 
-Your Shell should:
+### How to Use
 
-- Display a prompt and wait for the user to type a command. A command line always ends with a new line.
-- The prompt is displayed again each time a command has been executed.
-- The command lines are simple, no semicolons, no pipes, no redirections or any other advanced features.
-- The command lines are made only of one word. No arguments will be passed to programs.
-- If an executable cannot be found, print an error message and display the prompt again.
-- Handle errors.
-- You have to handle the “end of file” condition (Ctrl+D)
+Change local directory to simple_shell:
 
-5. Simple shell 0.2
+```
+cd simple_shell
+```
 
-Simple shell 0.1 +
+Compile all necessary files locally:
 
-Handle command lines with arguments
+```
+gcc -Wall -Werror -Wextra -pedantic *.c -o s_hell
+```
+
+Run compiled executable to enter shell:
+
+```
+./s_hell
+```
+
+## Built-Ins:
+s_hell supports the following built-in commands:
+
+* env - prints environment variable
+* exit - exits shell and s_hell program
+
+### s_hell functions like
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Authors
+
+* **Ian Culp** - ian.culp@holbertonschool.com
+* **Staci Aaenson-Fletcher** - staci.aaensonfletcher@holbertonschool.com
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.

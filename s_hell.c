@@ -7,13 +7,13 @@
 * Return: 0 on success or -1 on failure
 */
 
-int main(int ac, char **av)
+int main(void)
 {
 	char **cmd = malloc(sizeof(char *) * 10);
 	char *buf, *buf2, *pathval, *val, *execcpy;
 	size_t size = 0;
-	pid_t parent, child;
-	int i = 0, stat, get, ci = 0, execval;
+	pid_t child;
+	int stat, get, ci = 0, execval;
 	pathlist *pathhead = NULL, *currentpath;
 
 	if (cmd == NULL)
@@ -62,7 +62,7 @@ int main(int ac, char **av)
 			{
 				if ((execval == -1) && (currentpath == NULL))
 				{
-					perror(av[0]);
+					perror(execcpy);
 					exit(1);
 				}
 				else
