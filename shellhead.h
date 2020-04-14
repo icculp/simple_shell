@@ -10,8 +10,6 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-#define SSIZE_MAX 2147479552
-
 /**
 * struct pathlist - struct
 * @str: string data
@@ -48,32 +46,44 @@ typedef struct shellstruct
 } shellstruct;
 
 extern char **environ;
-void free_list(pathlist *head);
-int _strcmp(const char *s1, const char *s2);
+
+/* builtins.c */
+int builtins(shellstruct *sh);
+
+/* commandparser.c */
+shellstruct *commandparser(shellstruct *sh);
+void siginthandler(int sig_num);
+void initialize(shellstruct *sh);
+
+/* env.c */
+void penv(void);
 char *_getenv(const char *name);
-pathlist *add_node_end(pathlist **head, const char *str);
-void print_pathlist(const pathlist *h);
-pathlist *pathparser(char *val, pathlist *h);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
-char *_strdup(const char *str);
-char *_strcat(char *dest, char *src);
-int _strlen(const char *s);
-int _strcmp(const char *s1, const char *s2);
-void penv(void);
-int builtins(shellstruct *sh);
-shellstruct *commandparser(shellstruct *sh);
+
+/* helpers.c */
 char *pathval(char *execcpy, pathlist *currentpath);
 void _execve(shellstruct *sh);
 shellstruct *prompt(shellstruct *sh);
 void freehelper(shellstruct *sh);
 void freecmd(shellstruct *sh);
-int _atoi(char *s);
-void siginthandler(int sig_num);
-void initialize(shellstruct *sh);
 
+/* pathparser.c */
+void free_list(pathlist *head);
+pathlist *add_node_end(pathlist **head, const char *str);
+void print_pathlist(const pathlist *h);
+pathlist *pathparser(char *val, pathlist *h);
+
+/* strings.c */
+char *_strdup(const char *str);
+char *_strcat(char *dest, const char *src);
+int _strlen(const char *s);
+int _strcmp(const char *s1, const char *s2);
+int _atoi(char *s);
+
+/* strings2.c */
 unsigned int _strspn(char *s, const char *accept);
 size_t _strcspn(const char *s1, const char *s2);
-
 char *_strtok(char *str, const char *delim);
+
 #endif

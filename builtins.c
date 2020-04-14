@@ -22,5 +22,24 @@ int builtins(shellstruct *sh)
 		penv();
 		return (1);
 	}
+	if (!_strcmp(sh->cmd[0], "setenv"))
+	{
+		if (sh->cmd[1] == NULL)
+			perror("setenv");
+		if (sh->cmd[2] == NULL)
+			sh->cmd[2] = "";
+		else
+			_setenv(sh->cmd[1], sh->cmd[2], 1);
+		return (1);
+	}
+	if (!_strcmp(sh->cmd[0], "unsetenv"))
+	{
+		if (sh->cmd[1] == NULL)
+			perror("unsetenv");
+		else
+			_unsetenv(sh->cmd[1]);
+		return (1);
+	}
+
 	return (0);
 }

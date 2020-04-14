@@ -30,10 +30,13 @@ void freecmd(shellstruct *sh)
 	{
 		if (_strcmp(sh->cmd[i], ""))
 			free(sh->cmd[i]);
+		sh->cmd[i] = NULL;
 		i++;
 	}
 	free(sh->execcpy);
+	sh->execcpy = NULL;
 }
+
 
 /**
 * freehelper - Function helper that frees memory allocated throughout program

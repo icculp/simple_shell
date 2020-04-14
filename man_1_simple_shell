@@ -1,40 +1,40 @@
 .TH s_hell 1 "5 April 2020" "version 1.0" "command intepreter man page"
 .SH NAME
 .B s_hell
-command interpreter (shell)
+command line interpreter (shell)
 .SH SYNOPSIS
+Command Prompt or PS1 for s_hell:
+.SB s_hell$
+.br
 #include "shellhead.h"
 .br
-.SB int _printf(const unsigned int n, ...);
 .SH DESCRIPTION
-s_hell is a command line interpreter that executes commands read from standard input or from a file.
+s_hell is a command line interpreter that executes commands read from standard input.
 
 .br
-.B NEW HEADER HERE
+.B Built In Commands
 
 .br
-.B c
-- int argument is converted to char, the resulting char is written
+.B env
+- prints current environment variable
 
 .br
-.B s
-- argument is pointer to an array of character types, characters are written
+.B exit
+- exits shell, can be used with exit code option
+
+Example: exit 98
 
 .br
-.B %
-- the complete conversion specification is '%%', a '%' is written
+.B setenv
+- sets or adds an environment variable
 
 .br
-.B d, i
-- int argument is converted to signed decimal notation, decimal is written
+.B unsetenv
+- deletes an environment variable
 
 .br
-.B b
-- unsigned int is converted to binary, binary is written
 .SH OPTIONS
 None.
-.SH SEE ALSO
-.I None.
 .SH BUGS
 No known bugs. Notify
 .B AUTHOR

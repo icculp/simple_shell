@@ -1,6 +1,7 @@
 # Simple Shell Partner Project
 
 Create Unix Command Line Interpreter: s_hell functions like sh
+
 s_hell presents a commmand line allowing user interface with the operating system through keyboard input
 
 ## Getting Started

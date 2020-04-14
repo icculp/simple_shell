@@ -67,7 +67,7 @@ size_t _strcspn(const char *s1, const char *s2)
 
 char *_strtok(char *str, const char *delim)
 {
-	static char *p = 0;
+	static char *p;
 
 	if (str)
 		p = str;
