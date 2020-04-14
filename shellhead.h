@@ -8,6 +8,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <signal.h>
+
+#define SSIZE_MAX 2147479552
 
 /**
 * struct pathlist - struct
@@ -65,5 +68,12 @@ void _execve(shellstruct *sh);
 shellstruct *prompt(shellstruct *sh);
 void freehelper(shellstruct *sh);
 void freecmd(shellstruct *sh);
-char *_strcpy(char *dest, char *src);
+int _atoi(char *s);
+void siginthandler(int sig_num);
+void initialize(shellstruct *sh);
+
+unsigned int _strspn(char *s, const char *accept);
+size_t _strcspn(const char *s1, const char *s2);
+
+char *_strtok(char *str, const char *delim);
 #endif

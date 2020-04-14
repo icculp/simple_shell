@@ -27,7 +27,11 @@ void freecmd(shellstruct *sh)
 	int i = 0;
 
 	while (sh->cmd[i])
-		free(sh->cmd[i++]);
+	{
+		if (_strcmp(sh->cmd[i], ""))
+			free(sh->cmd[i]);
+		i++;
+	}
 	free(sh->execcpy);
 }
 
@@ -52,7 +56,8 @@ void freehelper(shellstruct *sh)
 
 shellstruct *prompt(shellstruct *sh)
 {
-	write(STDOUT_FILENO, "s_hell$ ", 8);
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "s_hell$ ", 8);
 	sh->get = getline(&sh->buf, &sh->size, stdin);
 	return (sh);
 }
@@ -64,16 +69,16 @@ shellstruct *prompt(shellstruct *sh)
 
 void _execve(shellstruct *sh)
 {
-	int execval;
+	int execval = -1;
 	pathlist *currentpath;
 	char *execwpath = NULL;
 
 	currentpath = sh->pathhead;
-	execval = execve(sh->cmd[0], sh->cmd, NULL);
 	while (execval == -1)
 	{
 		if ((execval == -1) && (currentpath == NULL))
 		{
+			execval = execve(sh->cmd[0], sh->cmd, NULL);
 			perror(sh->execcpy);
 			freehelper(sh);
 			exit(1);

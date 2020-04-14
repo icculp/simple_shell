@@ -11,18 +11,14 @@ int main(void)
 	int builtin = 0;
 	shellstruct sh = {NULL, 0, 0, 0, NULL, NULL, NULL};
 
-	sh.cmd = malloc(sizeof(char *) * 128);
-	sh.pathhead = pathparser(_getenv("PATH"), sh.pathhead);
-	prompt(&sh);
+	initialize(&sh);
 	while (sh.get >= 0)
 	{
 		sh.buf[_strlen(sh.buf) - 1] = '\0';
 		commandparser(&sh);
-		sh.execcpy = _strdup(sh.cmd[0]);
 		if (!(_strcmp(sh.cmd[0], "")))
 		{
-			freecmd(&sh);
-			prompt(&sh);
+			freecmd(&sh), prompt(&sh);
 			continue;
 		}
 		builtin = builtins(&sh);
@@ -40,8 +36,7 @@ int main(void)
 		else
 		{
 			wait(&sh.stat);
-			freecmd(&sh);
-			prompt(&sh);
+			freecmd(&sh), prompt(&sh);
 		}
 	}
 	freehelper(&sh);

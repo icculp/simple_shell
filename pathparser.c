@@ -11,11 +11,11 @@ pathlist *pathparser(char *val, pathlist *h)
 {
 	char *valptr = NULL;
 
-	valptr = strtok(val, ":");
+	valptr = _strtok(val, ":");
 	while (valptr)
 	{
 		add_node_end(&h, valptr);
-		valptr = strtok(NULL, ":");
+		valptr = _strtok(NULL, ":");
 	}
 	free(val);
 	return (h);

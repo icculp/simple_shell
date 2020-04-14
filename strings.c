@@ -1,23 +1,40 @@
 #include "shellhead.h"
 
 /**
-* *_strcpy - Copies a string pointed to by src including null char to buffer
-* @dest: A buffer to receive the copied string
-* @src: The pointer of the string to the copied
-* Return: Value of buffer dest
+* _atoi - Converts a string to an integer
+* @s: String input to be converted
+* Return: Value of integer to be retruned
 */
 
-char *_strcpy(char *dest, char *src)
+int _atoi(char *s)
 {
-	int i = 0, j;
+	unsigned int result;
+	int sign;
 
-	while (src[i] != '\0')
-		i++;
-	i++;
-	for (j = 0; j < i; j++)
-		dest[j] = src[j];
-
-	return (dest);
+	result = 0;
+	sign = 1;
+	while (*s != '\0')
+	{
+		if ((*s) == '-')
+		{
+			sign = sign * -1;
+			s++;
+		}
+		else if ((*s >= '0') && (*s <= '9'))
+		{
+			result = (result * 10) + ((*s) - '0');
+			s++;
+		}
+		else if (result == 0 && !((*s >= '0') && (*s <= '9')))
+		{
+			s++;
+		}
+		else if (result > 0 && !((*s >= '0') && (*s <= '9')))
+		{
+			break;
+		}
+	}
+	return (result * sign);
 }
 
 /**
