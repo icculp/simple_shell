@@ -1,11 +1,11 @@
 # Simple Shell Partner Project
 
-Command Line Interpreter: s_hell -  written for Holberton School cohort 11
-simple shell end of first trimester project
+Create Unix Command Line Interpreter: s_hell functions like sh
+s_hell presents a commmand line allowing user interface with the operating system through keyboard input
 
 ## Getting Started
 
-Access Github for s_hell source code
+Access Github for s_hell source code:
 
 ```
 https://github.com/icculp/simple_shell
@@ -13,17 +13,20 @@ https://github.com/icculp/simple_shell
 
 ### Prerequisites
 
-Clone github repo:
+Clone github repository:
 
 ```
 git clone https://github.com/icculp/simple_shell
 ```
 
-Check all files from repo are available locally:
+Check all necessary files from repository are available locally:
 ```
 _getenv.c
+builtins.c
+commandparser.c
+env.c
+helpers.c
 pathparser.c
-penv.c
 s_hell.c
 strings.c
 shellhead.h
@@ -34,56 +37,67 @@ shellhead.h
 Change local directory to simple_shell:
 
 ```
-cd simple_shell
+$ cd simple_shell
 ```
 
 Compile all necessary files locally:
 
 ```
-gcc -Wall -Werror -Wextra -pedantic *.c -o s_hell
+$ gcc -Wall -Werror -Wextra -pedantic *.c -o s_hell
 ```
 
 Run compiled executable to enter shell:
 
 ```
-./s_hell
+$ ./s_hell
 ```
 
 ## Built-Ins:
 s_hell supports the following built-in commands:
 
 * env - prints environment variable
-* exit - exits shell and s_hell program
-
-### s_hell functions like
-
-Explain what these tests test and why
 
 ```
-Give an example
+s_hell$ env
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+* exit - exits shell/s_hell program
 
 ```
-Give an example
+s_hell$ exit
 ```
 
-## Deployment
+### What to Expect:
 
-Add additional notes about how to deploy this on a live system
+s_hell functions like a Unix command line interpreter in some of its simplest forms.
 
-## Built With
+To print path of current working directory, try command pwd:
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+```
+s_hell$ pwd
+```
+
+To list contents of current working directory, try command ls:
+
+```
+s_hell$ ls
+```
+
+To list contents of current working directory in long format, try command ls -l:
+
+```
+s_hell$ ls -l
+```
+
+To print input to screen, try command echo:
+
+```
+s_hell$ echo "Holberton School"
+Holberton School
+s_hell$
+```
 
 ## Authors
 
 * **Ian Culp** - ian.culp@holbertonschool.com
 * **Staci Aaenson-Fletcher** - staci.aaensonfletcher@holbertonschool.com
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
