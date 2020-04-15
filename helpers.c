@@ -73,7 +73,7 @@ shellstruct *prompt(shellstruct *sh)
 
 void _execve(shellstruct *sh)
 {
-	int execval = -1, i = 0;
+	int execval = -1;
 	pathlist *currentpath;
 	char *execwpath = NULL;
 	char *cn = malloc(sizeof(char) * 2);
@@ -84,12 +84,7 @@ void _execve(shellstruct *sh)
 		if ((execval == -1) && (currentpath == NULL))
 		{
 			execval = execve(sh->cmd[0], sh->cmd, environ);
-			/** Lines 88-100 for printing command not found error message  */
-			while (sh->av[0][i])
-			{
-				sh->av[0][i] = sh->av[0][i + 2];
-				i++;
-			}
+			/** Lines 88-97 for printing command not found error message  */
 			write(STDOUT_FILENO, sh->av[0], _strlen(sh->av[0]));
 			write(STDOUT_FILENO, ": ", 2);
 			cn[0] = (char)(sh->commandnumber + 48);

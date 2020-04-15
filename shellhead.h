@@ -54,6 +54,7 @@ typedef struct shellstruct
 extern char **environ;
 
 /* builtins.c */
+void illegalexitnum(shellstruct *sh);
 int builtins(shellstruct *sh);
 
 /* commandparser.c */

@@ -9,8 +9,15 @@
 
 void initialize(shellstruct *sh, int ac, char **av)
 {
+	int i = 0;
+
 	sh->ac = ac;
 	sh->av = av;
+	while (sh->av[0][i])
+	{
+		sh->av[0][i] = sh->av[0][i + 2];
+		i++;
+	}
 	sh->cmd = malloc(sizeof(char *) * 128);
 	sh->pathhead = pathparser(_getenv("PATH"), sh->pathhead);
 	signal(SIGINT, siginthandler);
