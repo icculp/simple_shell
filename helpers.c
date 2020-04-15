@@ -83,7 +83,7 @@ void _execve(shellstruct *sh)
 	{
 		if ((execval == -1) && (currentpath == NULL))
 		{
-			execval = execve(sh->cmd[0], sh->cmd, NULL);
+			execval = execve(sh->cmd[0], sh->cmd, environ);
 			/** Lines 88-100 for printing command not found error message  */
 			while (sh->av[0][i])
 			{
