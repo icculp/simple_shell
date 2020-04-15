@@ -62,6 +62,8 @@ int _strcmp(const char *s1, const char *s2)
 		else
 			i++;
 	}
+	if (s1[i] != s2[i])
+		ret = s1[i] - s2[i];
 	return (ret);
 }
 
