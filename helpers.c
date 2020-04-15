@@ -99,7 +99,7 @@ void _execve(shellstruct *sh)
 			write(STDOUT_FILENO, ": not found\n", 12);
 			free(cn);
 			freehelper(sh);
-			exit(127);
+			_exit(127);
 		}
 		else
 		{

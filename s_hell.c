@@ -12,6 +12,7 @@ int main(int ac, char **av)
 	pid_t child;
 	int builtin = 0;
 	shellstruct sh = {NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL};
+	int ext;
 
 	initialize(&sh, ac, av);
 	while (sh.get >= 0)
@@ -44,5 +45,6 @@ int main(int ac, char **av)
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "\n", 1);
 	freehelper(&sh);
-	return (0);
+	ext = WEXITSTATUS(sh.stat);
+	return (ext);
 }
