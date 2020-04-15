@@ -59,6 +59,7 @@ void freehelper(shellstruct *sh)
 
 shellstruct *prompt(shellstruct *sh)
 {
+	sh->commandnumber++;
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "s_hell$ ", 8);
 	sh->get = getline(&sh->buf, &sh->size, stdin);
@@ -72,9 +73,10 @@ shellstruct *prompt(shellstruct *sh)
 
 void _execve(shellstruct *sh)
 {
-	int execval = -1;
+	int execval = -1, i = 0;
 	pathlist *currentpath;
 	char *execwpath = NULL;
+	char *cn = malloc(sizeof(char) * 2);
 
 	currentpath = sh->pathhead;
 	while (execval == -1)
@@ -82,15 +84,28 @@ void _execve(shellstruct *sh)
 		if ((execval == -1) && (currentpath == NULL))
 		{
 			execval = execve(sh->cmd[0], sh->cmd, NULL);
-			perror(sh->execcpy);
+			/** Lines 88-100 for printing command not found error message  */
+			while (sh->av[0][i])
+			{
+				sh->av[0][i] = sh->av[0][i + 2];
+				i++;
+			}
+			write(STDOUT_FILENO, sh->av[0], _strlen(sh->av[0]));
+			write(STDOUT_FILENO, ": ", 2);
+			cn[0] = (char)(sh->commandnumber + 48);
+			write(STDOUT_FILENO, cn, 1);
+			write(STDOUT_FILENO, ": ", 2);
+			write(STDOUT_FILENO, sh->execcpy, _strlen(sh->execcpy));
+			write(STDOUT_FILENO, ": not found\n", 12);
+			free(cn);
 			freehelper(sh);
-			exit(1);
+			exit(127);
 		}
 		else
 		{
 			execwpath = pathval(sh->execcpy, currentpath);
 			currentpath = currentpath->next;
-			execval = execve(execwpath, sh->cmd, NULL);
+			execval = execve(execwpath, sh->cmd, environ);
 			free(execwpath);
 		}
 	}

@@ -31,6 +31,9 @@ typedef struct pathlist
 * @pathhead: Head of path linked list
 * @cmd: Arugment array
 * @execcpy: Copy of executable name without arguments or path
+* @commandnumber: Log of commands given to shell
+* @ac: argcount
+* @av: args array
 * Description: Allows multiple arguments TO and RETURN from helper func
 */
 
@@ -43,6 +46,9 @@ typedef struct shellstruct
 	pathlist *pathhead;
 	char **cmd;
 	char *execcpy;
+	int commandnumber;
+	int ac;
+	char **av;
 } shellstruct;
 
 extern char **environ;
@@ -53,7 +59,7 @@ int builtins(shellstruct *sh);
 /* commandparser.c */
 shellstruct *commandparser(shellstruct *sh);
 void siginthandler(int sig_num);
-void initialize(shellstruct *sh);
+void initialize(shellstruct *sh, int ac, char **av);
 
 /* env.c */
 void penv(void);

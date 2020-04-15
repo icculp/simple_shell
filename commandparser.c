@@ -3,10 +3,14 @@
 /**
 * initialize - Initializes values for shell, prevents ctrl-c and prompts
 * @sh: Pointer to structure contaiing important data types for shell
+* @ac: Args count
+* @av: Args variable array
 */
 
-void initialize(shellstruct *sh)
+void initialize(shellstruct *sh, int ac, char **av)
 {
+	sh->ac = ac;
+	sh->av = av;
 	sh->cmd = malloc(sizeof(char *) * 128);
 	sh->pathhead = pathparser(_getenv("PATH"), sh->pathhead);
 	signal(SIGINT, siginthandler);

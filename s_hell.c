@@ -2,16 +2,18 @@
 
 /**
 * main - Program that functions as command line interpreter
+* @ac: Args count
+* @av: Args variable array
 * Return: 0 on success or -1 on failure
 */
 
-int main(void)
+int main(int ac, char **av)
 {
 	pid_t child;
 	int builtin = 0;
-	shellstruct sh = {NULL, 0, 0, 0, NULL, NULL, NULL};
+	shellstruct sh = {NULL, 0, 0, 0, NULL, NULL, NULL, 0, 0, NULL};
 
-	initialize(&sh);
+	initialize(&sh, ac, av);
 	while (sh.get >= 0)
 	{
 		sh.buf[_strlen(sh.buf) - 1] = '\0';
@@ -39,6 +41,8 @@ int main(void)
 			freecmd(&sh), prompt(&sh);
 		}
 	}
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "\n", 1);
 	freehelper(&sh);
 	return (0);
 }
