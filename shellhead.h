@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <limits.h>
 
 /**
 * struct pathlist - struct
@@ -69,13 +70,13 @@ int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 
 /* helpers.c */
-char *pathval(char *execcpy, pathlist *currentpath);
 void _execve(shellstruct *sh);
 shellstruct *prompt(shellstruct *sh);
 void freehelper(shellstruct *sh);
 void freecmd(shellstruct *sh);
 
 /* pathparser.c */
+char *pathval(char *execcpy, pathlist *currentpath);
 void free_list(pathlist *head);
 pathlist *add_node_end(pathlist **head, const char *str);
 void print_pathlist(const pathlist *h);

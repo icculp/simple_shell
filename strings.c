@@ -8,7 +8,7 @@
 
 int _atoi(char *s)
 {
-	unsigned int result;
+	int result;
 	int sign;
 
 	result = 0;
@@ -17,6 +17,8 @@ int _atoi(char *s)
 	{
 		if ((*s) == '-')
 		{
+			if (s[1] == '\0')
+				return (-1);
 			sign = sign * -1;
 			s++;
 		}
@@ -26,13 +28,11 @@ int _atoi(char *s)
 			s++;
 		}
 		else if (result == 0 && !((*s >= '0') && (*s <= '9')))
-		{
-			s++;
-		}
+			return (-1);
 		else if (result > 0 && !((*s >= '0') && (*s <= '9')))
-		{
-			break;
-		}
+			return (-1);
+		if (result > 2147483647 || result < 0)
+			return (-1);
 	}
 	return (result * sign);
 }

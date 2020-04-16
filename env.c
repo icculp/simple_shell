@@ -55,7 +55,7 @@ char *_getenv(const char *name)
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	int i = 0, j = 0;
-	char *var, *cpy;
+	char *var, *var2, *cpy;
 
 	if (name == NULL || _strlen(name) == 0)
 		return (-1);
@@ -75,14 +75,14 @@ int _setenv(const char *name, const char *value, int overwrite)
 	while (environ[i] != NULL)
 	{
 		var = _strdup(environ[i]);
-		var = _strtok(var, "=");
-		if ((_strcmp(var, name) == 0) && (overwrite > 0))
+		var2 = _strtok(var, "=");
+		if ((_strcmp(var2, name) == 0) && (overwrite > 0))
 		{
 			environ[i] = _strdup(cpy);
 			free(var), free(cpy);
 			return (0);
 		}
-		else if ((_strcmp(var, name) == 0) && (overwrite == 0))
+		else if ((_strcmp(var2, name) == 0) && (overwrite == 0))
 		{
 			free(var), free(cpy);
 			return (0);
@@ -104,7 +104,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 int _unsetenv(const char *name)
 {
 	int i = 0, j = 0;
-	char *var;
+	char *var, *var2, *cpy;
 
 	if (name == NULL)
 		return (-1);
@@ -116,23 +116,19 @@ int _unsetenv(const char *name)
 			return (-1);
 		j++;
 	}
-
 	while (environ[i] != NULL)
 	{
 		var = _strdup(environ[i]);
-		var = _strtok(var, "=");
-		if ((_strcmp(var, name) == 0))
+		var2 = _strtok(var, "=");
+		if ((_strcmp(var2, name) == 0))
 		{
+			cpy = environ[i];
 			while (environ[i] != NULL)
 			{
-				if (environ[i + 1] != NULL)
-					environ[i] = _strdup(environ[i + 1]);
-				else
-					environ[i] = NULL;
+				environ[i] = environ[i + 1];
 				i++;
 			}
-			j = 0;
-			free(var);
+			free(var), free(cpy);
 			return (0);
 		}
 		i++;

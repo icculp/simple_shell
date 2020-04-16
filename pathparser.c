@@ -1,6 +1,23 @@
 #include "shellhead.h"
 
 /**
+* pathval - Appends executable to directories in path
+* @execcpy: Copy of executable command
+* @currentpath: The current node in the path linked list
+* Return: Character pointer of executable appended to pathname
+*/
+
+char *pathval(char *execcpy, pathlist *currentpath)
+{
+	char *pathval;
+
+	pathval = _strdup(currentpath->str);
+	pathval = _strcat(pathval, "/");
+	pathval = _strcat(pathval, execcpy);
+	return (pathval);
+}
+
+/**
  * pathparser - parses environ path
  * @val: path string, untokenized
  * @h: linked list to store path tokens

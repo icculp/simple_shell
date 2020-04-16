@@ -32,16 +32,16 @@ int builtins(shellstruct *sh)
 {
 	int exitstatus = 0;
 
-	if (!_strcmp(sh->cmd[0], "exit"))
+	if(!_strcmp(sh->cmd[0], "exit"))
 	{
 		if (sh->cmd[1] != NULL)
 		{
-			if (sh->cmd[1][0] == '-')
+			exitstatus = _atoi(sh->cmd[1]);
+			if (exitstatus < 0)
 			{
 				illegalexitnum(sh);
 				return (1);
 			}
-			exitstatus = _atoi(sh->cmd[1]);
 		}
 		freehelper(sh);
 		exit(exitstatus);
