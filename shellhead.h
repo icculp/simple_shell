@@ -70,6 +70,7 @@ int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 
 /* helpers.c */
+void cmdnfound(shellstruct *sh);
 void _execve(shellstruct *sh);
 shellstruct *prompt(shellstruct *sh);
 void freehelper(shellstruct *sh);
