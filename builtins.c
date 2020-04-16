@@ -41,12 +41,10 @@ int builtins(shellstruct *sh)
 			{
 				illegalexitnum(sh);
 				return (1);
-			}
-		}
+			}}
 		else
 			exitstatus = WEXITSTATUS(sh->stat);
-		freehelper(sh);
-		exit(exitstatus);
+		freehelper(sh), exit(exitstatus);
 	}
 	if (!_strcmp(sh->cmd[0], "env"))
 	{
@@ -69,7 +67,6 @@ int builtins(shellstruct *sh)
 			perror("unsetenv");
 		else
 			_unsetenv(sh->cmd[1]);
-		return (1);
-	}
+		return (1); }
 	return (0);
 }
