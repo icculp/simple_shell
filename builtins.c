@@ -32,7 +32,7 @@ int builtins(shellstruct *sh)
 {
 	int exitstatus = 0;
 
-	if(!_strcmp(sh->cmd[0], "exit"))
+	if (!_strcmp(sh->cmd[0], "exit"))
 	{
 		if (sh->cmd[1] != NULL)
 		{

@@ -48,10 +48,15 @@ shellstruct *prompt(shellstruct *sh)
 	return (sh);
 }
 
+/**
+ * cmdnfound - prints error message with bad command
+ * @sh: pointer to shellstruct
+ */
+
 void cmdnfound(shellstruct *sh)
 { /** Should cpy/cat to one variable and call write once, but nah */
 	char *cn = malloc(sizeof(char) * 2);
-	
+
 	write(STDOUT_FILENO, sh->av[0], _strlen(sh->av[0]));
 	write(STDOUT_FILENO, ": ", 2);
 	cn[0] = (char)(sh->commandnumber + 48);
@@ -88,7 +93,7 @@ void _execve(shellstruct *sh)
 			}
 			if (c != 0)
 				execval = execve(sh->cmd[0], sh->cmd, environ);
-			cmdnfound(sh);/** Lines 88-97 for printing command not found error message  */
+			cmdnfound(sh);
 		}
 		else
 		{
