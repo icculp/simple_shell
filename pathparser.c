@@ -8,12 +8,12 @@
 */
 
 char *pathval(char *execcpy, pathlist *currentpath)
-{
+{ /** helper for _execve in helpers.c */
 	char *pathval;
 
-	pathval = _strdup(currentpath->str);
-	pathval = _strcat(pathval, "/");
-	pathval = _strcat(pathval, execcpy);
+	pathval = _strdup(currentpath->str); /** /dir1 */
+	pathval = _strcat(pathval, "/"); /** /dir1/ */
+	pathval = _strcat(pathval, execcpy); /** /dir1/command */
 	return (pathval);
 }
 
@@ -25,7 +25,7 @@ char *pathval(char *execcpy, pathlist *currentpath)
  */
 
 pathlist *pathparser(char *val, pathlist *h)
-{
+{ /** separates path values by : delimiters in environ var $PATH */
 	char *valptr = NULL;
 
 	valptr = _strtok(val, ":");

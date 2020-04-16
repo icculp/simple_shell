@@ -17,26 +17,26 @@ int main(int ac, char **av)
 	initialize(&sh, ac, av);
 	while (sh.get >= 0)
 	{
-		sh.buf[_strlen(sh.buf) - 1] = '\0';
-		commandparser(&sh);
+		sh.buf[_strlen(sh.buf) - 1] = '\0';/** \n */
+		commandparser(&sh);/** tokenize input strings */
 		if (!(_strcmp(sh.cmd[0], "")))
-		{
+		{ /** if no tokens, input was spaces or \n */
 			freecmd(&sh), prompt(&sh);
 			continue;
 		}
 		builtin = builtins(&sh);
 		if (builtin == 1)
-		{
+		{ /** a builtin matched and executed, free and reprompt */
 			freecmd(&sh);
 			builtin = 0, prompt(&sh);
 			continue;
 		}
 		child = fork();
 		if (child == -1)
-			perror("Fork failed, you are infertile. "), exit(1);
-		if (child == 0)
+			perror("Fork failed.\n"), exit(1);
+		if (child == 0) /** child process */
 			_execve(&sh);
-		else
+		else /** parent */
 		{
 			wait(&sh.stat);
 			freecmd(&sh), prompt(&sh);
@@ -45,6 +45,6 @@ int main(int ac, char **av)
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "\n", 1);
 	freehelper(&sh);
-	ext = WEXITSTATUS(sh.stat);
+	ext = WEXITSTATUS(sh.stat); /** exit status from child */
 	return (ext);
 }

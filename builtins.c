@@ -6,7 +6,7 @@
  */
 
 void illegalexitnum(shellstruct *sh)
-{
+{ /** shold cpy/cat to one var and call write once */
 	char *cn;
 
 	cn = malloc(sizeof(char) * 2);
@@ -25,7 +25,7 @@ void illegalexitnum(shellstruct *sh)
 /**
 * builtins - checks for builtin commands like env and exit
 * @sh: Tokenized argument array in sh->cmd
-* Return: Flag value of 1 if certain builtins run
+* Return: If builtin run, set flag to 1, so main will free and reprompt, else 0
 */
 
 int builtins(shellstruct *sh)
@@ -35,14 +35,14 @@ int builtins(shellstruct *sh)
 	if (!_strcmp(sh->cmd[0], "exit"))
 	{
 		if (sh->cmd[1] != NULL)
-		{
+		{ /** exit flags */
 			exitstatus = _atoi(sh->cmd[1]);
 			if (exitstatus < 0)
-			{
+			{ /** negative return on neg ints and chars */
 				illegalexitnum(sh);
 				return (1);
 			}}
-		else
+		else /** no flags, return with child execve  exit status */
 			exitstatus = WEXITSTATUS(sh->stat);
 		freehelper(sh), exit(exitstatus);
 	}
@@ -53,17 +53,17 @@ int builtins(shellstruct *sh)
 	}
 	if (!_strcmp(sh->cmd[0], "setenv"))
 	{
-		if (sh->cmd[1] == NULL)
+		if (sh->cmd[1] == NULL) /** no name to set */
 			perror("setenv");
-		if (sh->cmd[2] == NULL)
+		if (sh->cmd[2] == NULL) /** no value to set to name */
 			sh->cmd[2] = "";
-		else
+		else /** name and value good, set them */
 			_setenv(sh->cmd[1], sh->cmd[2], 1);
 		return (1);
 	}
 	if (!_strcmp(sh->cmd[0], "unsetenv"))
 	{
-		if (sh->cmd[1] == NULL)
+		if (sh->cmd[1] == NULL) /** no name to unset */
 			perror("unsetenv");
 		else
 			_unsetenv(sh->cmd[1]);

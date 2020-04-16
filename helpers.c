@@ -11,12 +11,12 @@ void freecmd(shellstruct *sh)
 
 	while (sh->cmd[i])
 	{
-		if (_strcmp(sh->cmd[i], ""))
+		if (_strcmp(sh->cmd[i], ""))/** free all non empty strings */
 			free(sh->cmd[i]);
-		sh->cmd[i] = NULL;
+		sh->cmd[i] = NULL; /** prevents double free error */
 		i++;
 	}
-	free(sh->execcpy);
+	free(sh->execcpy); /** dup of cmd[0], ready for next command */
 	sh->execcpy = NULL;
 }
 
@@ -41,11 +41,11 @@ void freehelper(shellstruct *sh)
 
 shellstruct *prompt(shellstruct *sh)
 {
-	sh->commandnumber++;
-	if (isatty(STDIN_FILENO))
+	sh->commandnumber++;/** tracks count of interactions with shell */
+	if (isatty(STDIN_FILENO))/** check for interactive mode */
 		write(STDOUT_FILENO, "s_hell$ ", 8);
-	sh->get = getline(&sh->buf, &sh->size, stdin);
-	return (sh);
+	sh->get = getline(&sh->buf, &sh->size, stdin);/** receive input */
+	return (sh);/**redundant no need to return, could've been void function*/
 }
 
 /**
@@ -66,7 +66,7 @@ void cmdnfound(shellstruct *sh)
 	write(STDOUT_FILENO, ": not found\n", 12);
 	free(cn);
 	freehelper(sh);
-	_exit(127);
+	_exit(127);/**exits in child process, so _exit used*/
 }
 
 /**
@@ -84,19 +84,18 @@ void _execve(shellstruct *sh)
 	while (execval == -1)
 	{
 		if ((execval == -1) && (currentpath == NULL))
-		{
+		{/** probably need to check if current dir in $PATH... */
 			while (sh->cmd[0][i])
-			{
+			{ /** checks if command name contains path in it */
 				if (sh->cmd[0][i] == '/')
 					c++;
 				i++;
-			}
-			if (c != 0)
+			if (c != 0) /** name contains path, try to execute */
 				execval = execve(sh->cmd[0], sh->cmd, environ);
-			cmdnfound(sh);
+			cmdnfound(sh);/** name doesn't contain path, and not in $PATH */
 		}
 		else
-		{
+		{ /** copies directory in $PATH to front of command name b4 execute */
 			execwpath = pathval(sh->execcpy, currentpath);
 			currentpath = currentpath->next;
 			execval = execve(execwpath, sh->cmd, environ);

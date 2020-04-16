@@ -30,15 +30,15 @@ char *_getenv(const char *name)
 	while (environ[i] != NULL)
 	{
 		var = _strdup(environ[i]);
-		ptr = _strtok(var, "=");
+		ptr = _strtok(var, "=");/** separate var name from var value */
 		if (_strcmp(ptr, name) == 0)
-		{
+		{ /** var name found, return only var value */
 			ptr = _strtok(NULL, "=");
 			val = _strdup(ptr);
 			free(var);
 			return (val);
 		}
-		free(var);
+		free(var); /** name not found */
 		i++;
 	}
 	return (NULL);

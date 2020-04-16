@@ -9,21 +9,17 @@
 
 void initialize(shellstruct *sh, int ac, char **av)
 {
-	int i = 0, start = -1;
-
 	sh->ac = ac;
 	sh->av = av;
-	i = _strlen(av[0]) - 1;
-	while (av[0][i] != '/')
-		i--;
-	while (sh->av[0][i] != '\0')
-	{
-		i++, start++;
-		sh->av[0][start] = sh->av[0][i];
-	}
 	sh->cmd = malloc(sizeof(char *) * 128);
+	if (sh->cmd == NULL)
+	{
+		freehelper(sh);
+		write(STDERR_FILENO, "Malloc failed.\n", 15);
+		exit(1);
+	}
 	sh->pathhead = pathparser(_getenv("PATH"), sh->pathhead);
-	signal(SIGINT, siginthandler);
+	signal(SIGINT, siginthandler);/** ignore ctrl-c */
 	prompt(sh);
 }
 
@@ -52,27 +48,20 @@ shellstruct *commandparser(shellstruct *sh)
 		char *buf2;
 		int ci = 0;
 
-		if (sh->cmd == NULL)
-		{
-			freehelper(sh);
-			exit(1);
-		}
 		buf2 = _strtok(sh->buf, " ");
-		if (buf2 == NULL)
+		if (buf2 == NULL)/** no tokens because all spaces become NULL */
 		{
-			sh->cmd[0] = "";
+			sh->cmd[0] = "";/** set to \0 so strcmp doesn't segfault */
 			sh->cmd[1] = NULL;
-			free(buf2);
 			return (sh);
 		}
-		while (buf2)
+		while (buf2)/** tokenize like normal */
 		{
 			sh->cmd[ci] = _strdup(buf2);
 			buf2 = _strtok(NULL, " ");
 			ci++;
 		}
 		sh->cmd[ci] = NULL;
-		free(buf2);
 		sh->execcpy = _strdup(sh->cmd[0]);
 		return (sh);
 }
