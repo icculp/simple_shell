@@ -43,6 +43,8 @@ int builtins(shellstruct *sh)
 				return (1);
 			}
 		}
+		else
+			exitstatus = WEXITSTATUS(sh->stat);
 		freehelper(sh);
 		exit(exitstatus);
 	}
