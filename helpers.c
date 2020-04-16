@@ -93,6 +93,7 @@ void _execve(shellstruct *sh)
 			if (c != 0) /** name contains path, try to execute */
 				execval = execve(sh->cmd[0], sh->cmd, environ);
 			cmdnfound(sh);/** name doesn't contain path, and not in $PATH */
+			}
 		}
 		else
 		{ /** copies directory in $PATH to front of command name b4 execute */
