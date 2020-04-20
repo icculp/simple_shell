@@ -115,23 +115,21 @@ char *_strdup(const char *str)
 {
 	int i;
 	int len = 0;
-	char *c;
+	char *c = NULL;
 
-	if (str == 0)
+	if (str == NULL)
 	{
 		return (NULL);
 	}
-	for (len = 0; str[len] != '\0'; len++)
-	{
-		;
-	}
-	len++;
-	c = malloc(sizeof(char) * len);
+	len = _strlen(str) + 1;
+	c = malloc(sizeof(char) * (len));
 	if (c == NULL)
 	{
 		free(c);
 		return (NULL);
 	}
+	if (!(_strcmp(str, "")))
+		c[0] = '\0';
 	for (i = 0; i < len; i++)
 	{
 		c[i] = str[i];

@@ -27,10 +27,40 @@ char *pathval(char *execcpy, pathlist *currentpath)
 pathlist *pathparser(char *val, pathlist *h)
 { /** separates path values by : delimiters in environ var $PATH */
 	char *valptr = NULL;
+	int i = 0, j = -1, k = 0;
 
+	if (val == NULL || val[0] == '\0')
+	{
+		add_node_end(&h, "");
+		return (h); }
+	if (val[0] == ':')
+		j = 0;
+	else if (val[_strlen(val) - 1] == ':')
+		j = _strlen(val) - 1;
+	else
+	{
+		while (val[i])
+		{
+			if (val[i] == ':')
+			{
+				k++;
+				if (val[i + 1] == ':')
+				{
+					j = k;
+					break; }
+			}
+			i++; }
+	}
+	i = -1;
 	valptr = _strtok(val, ":");
 	while (valptr)
 	{
+		i++;
+		if (i == j)
+		{
+			add_node_end(&h, "");
+			continue;
+		}
 		add_node_end(&h, valptr);
 		valptr = _strtok(NULL, ":");
 	}

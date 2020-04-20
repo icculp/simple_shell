@@ -36,7 +36,7 @@ int main(int ac, char **av)
 			perror("Fork failed.\n"), exit(1);
 		if (child == 0) /** child process */
 			_execve(&sh);
-		else /** parent */
+		else/** parent*/
 		{
 			wait(&sh.stat);
 			freecmd(&sh), prompt(&sh);

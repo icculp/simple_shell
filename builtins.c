@@ -10,15 +10,15 @@ void illegalexitnum(shellstruct *sh)
 	char *cn;
 
 	cn = malloc(sizeof(char) * 2);
-	write(STDOUT_FILENO, sh->av[0], _strlen(sh->av[0]));
-	write(STDOUT_FILENO, ": ", 2);
+	write(STDERR_FILENO, sh->av[0], _strlen(sh->av[0]));
+	write(STDERR_FILENO, ": ", 2);
 	cn[0] = (char)(sh->commandnumber + 48);
-	write(STDOUT_FILENO, cn, 1);
-	write(STDOUT_FILENO, ": ", 2);
-	write(STDOUT_FILENO, sh->execcpy, _strlen(sh->execcpy));
-	write(STDOUT_FILENO, ": Illegal number: ", 18);
-	write(STDOUT_FILENO, sh->cmd[1], _strlen(sh->cmd[1]));
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDERR_FILENO, cn, 1);
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, sh->execcpy, _strlen(sh->execcpy));
+	write(STDERR_FILENO, ": Illegal number: ", 18);
+	write(STDERR_FILENO, sh->cmd[1], _strlen(sh->cmd[1]));
+	write(STDERR_FILENO, "\n", 1);
 	free(cn);
 }
 

@@ -57,13 +57,13 @@ void cmdnfound(shellstruct *sh)
 { /** Should cpy/cat to one variable and call write once, but nah */
 	char *cn = malloc(sizeof(char) * 2);
 
-	write(STDOUT_FILENO, sh->av[0], _strlen(sh->av[0]));
-	write(STDOUT_FILENO, ": ", 2);
+	write(STDERR_FILENO, sh->av[0], _strlen(sh->av[0]));
+	write(STDERR_FILENO, ": ", 2);
 	cn[0] = (char)(sh->commandnumber + 48);
-	write(STDOUT_FILENO, cn, 1);
-	write(STDOUT_FILENO, ": ", 2);
-	write(STDOUT_FILENO, sh->execcpy, _strlen(sh->execcpy));
-	write(STDOUT_FILENO, ": not found\n", 12);
+	write(STDERR_FILENO, cn, 1);
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, sh->execcpy, _strlen(sh->execcpy));
+	write(STDERR_FILENO, ": not found\n", 12);
 	free(cn);
 	freehelper(sh);
 	_exit(127);/**exits in child process, so _exit used*/
@@ -81,19 +81,23 @@ void _execve(shellstruct *sh)
 	char *execwpath = NULL;
 
 	currentpath = sh->pathhead;
+	while (sh->cmd[0][i])
+	{ /** checks if command name contains path in it */
+		if (sh->cmd[0][i] == '/')
+			c++;
+		i++;
+		if (c != 0) /** name contains path, try to execute */
+		{
+			execval = execve(sh->cmd[0], sh->cmd, environ);
+			if (execval == -1)
+				cmdnfound(sh);
+		}
+	}
 	while (execval == -1)
 	{
 		if ((execval == -1) && (currentpath == NULL))
 		{/** probably need to check if current dir in $PATH... */
-			while (sh->cmd[0][i])
-			{ /** checks if command name contains path in it */
-				if (sh->cmd[0][i] == '/')
-					c++;
-				i++;
-			if (c != 0) /** name contains path, try to execute */
-				execval = execve(sh->cmd[0], sh->cmd, environ);
 			cmdnfound(sh);/** name doesn't contain path, and not in $PATH */
-			}
 		}
 		else
 		{ /** copies directory in $PATH to front of command name b4 execute */
